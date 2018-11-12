@@ -1,0 +1,27 @@
+# v2 syntax
+version: '2'
+
+services:
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: mysql
+    volumes:
+      - ./storage/app/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=cooper
+      - MYSQL_DATABASE=cooper
+      - MYSQL_USER=cooper
+      - MYSQL_PASSWORD=cooper
+
+  # PHP (with Apache)
+  app:
+    image: webdevops/php-apache-dev
+    container_name: app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8081:8080"
+    links:
+      - mysql
